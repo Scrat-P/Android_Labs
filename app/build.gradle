@@ -1,13 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        signConfig {
+            keyAlias 'key0'
+            keyPassword '5526374891'
+            storeFile file('C:/Users/User/keystores/android.jks')
+            storePassword '5526374891'
+        }
+    }
     def getVersionName = { ->
         def stdout = new ByteArrayOutputStream()
         exec {
             commandLine 'git', 'describe', '--tags'
             standardOutput = stdout
         }
-        String[] temp = stdout.toString().trim().split()
+        String[] temp = stdout.toString().trim().split("-")
 
         return temp[0] + '.' + temp[1]
     }
@@ -30,18 +38,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            singingConfig singingConfigs.signConfig
-            debuggable false
-            jniDebuggable false
-            renderscriptDebuggable false
-            zipAlignEnabled true
+            signingConfig signingConfigs.signConfig
         }
         debug {
-            debuggable true
-            jniDebuggable false
-            renderscriptDebuggable false
-            minifyEnabled false
-            zipAlignEnabled true
         }
     }
     flavorDimensions "version"
