@@ -12,7 +12,7 @@ android {
     def getVersionName = { ->
         def stdout = new ByteArrayOutputStream()
         exec {
-            commandLine 'git', 'describe', '--tags'
+            commandLine 'git', 'describe', '--tags', '--long'
             standardOutput = stdout
         }
         String[] temp = stdout.toString().trim().split("-")

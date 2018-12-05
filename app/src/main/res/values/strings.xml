@@ -3,5 +3,5 @@
     <string name="version">Version</string>
     <string name="imei">IMEI</string>
     <string name="close">close</string>
-    <string name="explanation">The application requests permission to access your functions to show your IMEI.</string>
+    <string name="explanation">Application need permission to obtain information about phone state to display IMEI.</string>
 </resources>

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             requestPermissions();
+            shouldShowPermissionExplanation = true;
         }
     }
 
