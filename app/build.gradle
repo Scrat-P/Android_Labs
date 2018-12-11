@@ -56,6 +56,13 @@ android {
 }
 
 dependencies {
+    def nav_version = "1.0.0-alpha07"
+    implementation "android.arch.navigation:navigation-fragment:$nav_version"
+    implementation "android.arch.navigation:navigation-ui:$nav_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
+    androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version"
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
