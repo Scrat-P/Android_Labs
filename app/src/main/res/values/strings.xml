@@ -15,4 +15,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_home_fragment">Home</string>
     <string name="hello_profile_fragment">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
