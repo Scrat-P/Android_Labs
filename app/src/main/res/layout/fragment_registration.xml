@@ -9,21 +9,23 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="169dp"
+        android:layout_width="193dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="173dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="173dp"
-        android:text="Registration"
+        android:text="@string/auth_label_new_account"
+        android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/emailField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="359dp"
@@ -32,10 +34,11 @@
         android:layout_marginTop="84dp"
         android:layout_marginEnd="15dp"
         android:ems="10"
+        android:hint="@string/auth_field_email"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordField"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -43,39 +46,40 @@
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="@string/auth_field_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/registerButton"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="276dp"
         android:layout_marginEnd="8dp"
-        android:text="Register"
+        android:text="@string/auth_button_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/backToLoginButton"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="324dp"
         android:layout_marginEnd="8dp"
-        android:text="Login"
+        android:text="@string/auth_button_back_to_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/passwordConfirmationField"
         android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -83,7 +87,9 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="@string/auth_field_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -4,18 +4,27 @@
     <string name="imei">IMEI</string>
     <string name="close">close</string>
     <string name="explanation">Application need permission to obtain information about phone state to display IMEI.</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">AndroidLabs</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_menu_home">Home</string>
+    <string name="nav_menu_profile">Profile</string>
+    <string name="nav_menu_rss">RSS</string>
+    <string name="auth_button_login">Login</string>
+    <string name="auth_button_register">Register</string>
+    <string name="auth_button_back_to_login">Back to login</string>
+    <string name="auth_button_create_new_account">Create new account</string>
+    <string name="auth_label_new_account">New account</string>
+    <string name="auth_label_login">Login</string>
+    <string name="auth_field_email">Email address</string>
+    <string name="auth_field_password">Password</string>
+    <string name="auth_field_confirm_password">Confirm password</string>
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="auth_error_message">Some error occurred.</string>
     <string name="hello_home_fragment">Home</string>
     <string name="hello_profile_fragment">Profile</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
