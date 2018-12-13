@@ -14,14 +14,17 @@
             android:id="@+id/action_profileFragment_to_profileEditFragment"
             app:destination="@id/profileEditFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.example.user.androidlabs.ProfileEditFragment"
         android:label="fragment_profile_edit"
         tools:layout="@layout/fragment_profile_edit" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.user.androidlabs.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
 </navigation>

@@ -62,10 +62,10 @@ public class LoginFragment extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                    enableButtons(createNewUserButton, loginButton);
                                     if (task.isSuccessful()) {
                                         startActivity(new Intent(getActivity(), MainActivity.class));
                                     } else {
-                                        enableButtons(createNewUserButton, loginButton);
                                         Log.d("Login", task.getException().getMessage());
                                         Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
                                     }
