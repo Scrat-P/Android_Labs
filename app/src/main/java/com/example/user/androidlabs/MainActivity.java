@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
             navController.navigate(R.id.profileFragment);
         } else if (id == R.id.nav_rss) {
-
+            navController.navigate(R.id.rssFragment);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

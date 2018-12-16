@@ -91,6 +91,7 @@ public class ProfileFragment extends Fragment {
         public void onSuccess(byte[] bytes) {
             Bitmap bmp = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
             profileImageView.setImageBitmap(bmp);
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
         }
     };
 
@@ -110,7 +111,6 @@ public class ProfileFragment extends Fragment {
                 fullNameView.setText(userProfile.fullName);
                 phoneNumberView.setText(userProfile.phoneNumber);
             }
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
         }
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
