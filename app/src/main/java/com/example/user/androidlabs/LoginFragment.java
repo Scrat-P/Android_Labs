@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class LoginFragment extends Fragment {
     private EditText passwordField;
     private Button createNewUserButton;
     private Button loginButton;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -37,6 +39,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        progressBar = view.findViewById(R.id.progressBar);
         emailField = view.findViewById(R.id.emailField);
         passwordField = view.findViewById(R.id.passwordField);
         createNewUserButton = view.findViewById(R.id.createNewUserButton);
@@ -57,6 +60,7 @@ public class LoginFragment extends Fragment {
             final String password = passwordField.getText().toString().trim();
 
             if (!email.isEmpty() && !password.isEmpty()) {
+                progressBar.setVisibility(ProgressBar.VISIBLE);
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(completeSignInListener);
@@ -88,6 +92,7 @@ public class LoginFragment extends Fragment {
     private void enableButtons(Button createNewUserButton, Button loginButton) {
         createNewUserButton.setEnabled(true);
         loginButton.setEnabled(true);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public interface OnFragmentInteractionListener {

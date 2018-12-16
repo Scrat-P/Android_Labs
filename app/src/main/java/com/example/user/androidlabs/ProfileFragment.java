@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class ProfileFragment extends Fragment {
     private TextView phoneNumberView;
     private TextView fullNameView;
     private ImageView profileImageView;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,10 +47,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
-            return;
-        }
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
 
         Button editButton = view.findViewById(R.id.profileEditButton);
         editButton.setOnClickListener(
@@ -110,9 +110,12 @@ public class ProfileFragment extends Fragment {
                 fullNameView.setText(userProfile.fullName);
                 phoneNumberView.setText(userProfile.phoneNumber);
             }
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
         }
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.d("ProfileImage", databaseError.getMessage());
+            Toast.makeText(getContext(), R.string.profile_show_error_message, Toast.LENGTH_SHORT).show();
         }
     };
 
