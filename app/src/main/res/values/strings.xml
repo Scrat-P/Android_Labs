@@ -23,6 +23,7 @@
     <string name="auth_field_password">Password</string>
     <string name="auth_field_confirm_password">Confirm password</string>
     <string name="action_settings">Settings</string>
+    <string name="profile_show_error_message">Some error occurred.</string>
     <string name="auth_error_message">Some error occurred.</string>
     <string name="profile_edit_error_message">Some error occurred.</string>
     <string name="profile_button_edit">Edit</string>

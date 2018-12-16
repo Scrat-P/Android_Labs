@@ -24,60 +24,61 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
-
-
-    public LoginFragment() {
-        // Required empty public constructor
-    }
-
+    private EditText emailField;
+    private EditText passwordField;
+    private Button createNewUserButton;
+    private Button loginButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        final EditText emailField = view.findViewById(R.id.emailField);
-        final EditText passwordField = view.findViewById(R.id.passwordField);
-        final Button createNewUserButton = view.findViewById(R.id.createNewUserButton);
-        final Button loginButton = view.findViewById(R.id.loginButton);
+        emailField = view.findViewById(R.id.emailField);
+        passwordField = view.findViewById(R.id.passwordField);
+        createNewUserButton = view.findViewById(R.id.createNewUserButton);
+        loginButton = view.findViewById(R.id.loginButton);
 
         createNewUserButton.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_loginFragment_to_registrationFragment)
+            Navigation.createNavigateOnClickListener(R.id.action_loginFragment_to_registrationFragment)
         );
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                disableButtons(createNewUserButton, loginButton);
-
-                final String email = emailField.getText().toString().trim();
-                final String password = passwordField.getText().toString().trim();
-
-
-
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    enableButtons(createNewUserButton, loginButton);
-                                    if (task.isSuccessful()) {
-                                        startActivity(new Intent(getActivity(), MainActivity.class));
-                                    } else {
-                                        Log.d("Login", task.getException().getMessage());
-                                        Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                } else {
-                    enableButtons(createNewUserButton, loginButton);
-                    Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        loginButton.setOnClickListener(loginButtonClickListener);
     }
+
+    private View.OnClickListener loginButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            disableButtons(createNewUserButton, loginButton);
+
+            final String email = emailField.getText().toString().trim();
+            final String password = passwordField.getText().toString().trim();
+
+            if (!email.isEmpty() && !password.isEmpty()) {
+                FirebaseAuth.getInstance()
+                    .signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(completeSignInListener);
+            } else {
+                enableButtons(createNewUserButton, loginButton);
+                Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private OnCompleteListener<AuthResult> completeSignInListener = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            enableButtons(createNewUserButton, loginButton);
+            if (task.isSuccessful()) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            } else {
+                Log.d("Login", task.getException().getMessage());
+                Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private void disableButtons(Button createNewUserButton, Button loginButton) {
         createNewUserButton.setEnabled(false);

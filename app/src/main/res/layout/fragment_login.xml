@@ -23,7 +23,7 @@
 
     <EditText
         android:id="@+id/emailField"
-        android:layout_width="359dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:ems="10"
@@ -36,7 +36,7 @@
 
     <EditText
         android:id="@+id/passwordField"
-        android:layout_width="359dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
         android:ems="10"
@@ -49,7 +49,7 @@
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="359dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="210dp"
@@ -62,7 +62,7 @@
 
     <Button
         android:id="@+id/createNewUserButton"
-        android:layout_width="359dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="260dp"

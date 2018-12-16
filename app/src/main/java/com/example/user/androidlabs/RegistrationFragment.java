@@ -23,62 +23,69 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationFragment extends Fragment {
-
-    public RegistrationFragment() {
-        // Required empty public constructor
-    }
-
+    private EditText emailField;
+    private EditText passwordField;
+    private EditText passwordConfirmationField;
+    private Button registerButton;
+    private Button backToLoginButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_registration, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        final EditText emailField = view.findViewById(R.id.emailField);
-        final EditText passwordField = view.findViewById(R.id.passwordField);
-        final EditText passwordConfirmationField = view.findViewById(R.id.passwordConfirmationField);
-        final Button registerButton = view.findViewById(R.id.registerButton);
-        final Button backToLoginButton = view.findViewById(R.id.backToLoginButton);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        emailField = view.findViewById(R.id.emailField);
+        passwordField = view.findViewById(R.id.passwordField);
+        passwordConfirmationField = view.findViewById(R.id.passwordConfirmationField);
+        registerButton = view.findViewById(R.id.registerButton);
+        backToLoginButton = view.findViewById(R.id.backToLoginButton);
 
-        backToLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                disableButtons(registerButton, backToLoginButton);
-
-                final String email = emailField.getText().toString().trim();
-                final String password = passwordField.getText().toString().trim();
-                final String passwordConfirmation = passwordConfirmationField.getText().toString().trim();
-
-                if (!email.isEmpty() && password.equals(passwordConfirmation)) {
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    enableButtons(registerButton, backToLoginButton);
-                                    if (task.isSuccessful()) {
-                                        startActivity(new Intent(getActivity(), MainActivity.class));
-                                    } else {
-                                        Log.d("Registration", task.getException().getMessage());
-                                        Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                } else {
-                    enableButtons(registerButton, backToLoginButton);
-                    Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        backToLoginButton.setOnClickListener(backToLoginButtonListener);
+        registerButton.setOnClickListener(registerButtonListener);
     }
+
+    private View.OnClickListener backToLoginButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            Navigation.findNavController(v).popBackStack();
+        }
+    };
+
+    private View.OnClickListener registerButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            disableButtons(registerButton, backToLoginButton);
+
+            final String email = emailField.getText().toString().trim();
+            final String password = passwordField.getText().toString().trim();
+            final String passwordConfirmation = passwordConfirmationField.getText().toString().trim();
+
+            if (!email.isEmpty() && password.equals(passwordConfirmation)) {
+                FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(completeRegisterListener);
+            } else {
+                enableButtons(registerButton, backToLoginButton);
+                Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private OnCompleteListener<AuthResult> completeRegisterListener = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            enableButtons(registerButton, backToLoginButton);
+            if (task.isSuccessful()) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            } else {
+                Log.d("Registration", task.getException().getMessage());
+                Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private void disableButtons(Button registerButton, Button loginButton) {
         registerButton.setEnabled(false);
