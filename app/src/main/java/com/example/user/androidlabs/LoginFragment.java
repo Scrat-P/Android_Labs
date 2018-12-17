@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
     private View.OnClickListener loginButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
-            disableButtons(createNewUserButton, loginButton);
+            disableButtons();
 
             final String email = emailField.getText().toString().trim();
             final String password = passwordField.getText().toString().trim();
@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
                     .signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(completeSignInListener);
             } else {
-                enableButtons(createNewUserButton, loginButton);
+                enableButtons();
                 Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
             }
         }
@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment {
     private OnCompleteListener<AuthResult> completeSignInListener = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
-            enableButtons(createNewUserButton, loginButton);
+            enableButtons();
             if (task.isSuccessful()) {
                 startActivity(new Intent(getActivity(), MainActivity.class));
             } else {
@@ -84,12 +84,12 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    private void disableButtons(Button createNewUserButton, Button loginButton) {
+    private void disableButtons() {
         createNewUserButton.setEnabled(false);
         loginButton.setEnabled(false);
     }
 
-    private void enableButtons(Button createNewUserButton, Button loginButton) {
+    private void enableButtons() {
         createNewUserButton.setEnabled(true);
         loginButton.setEnabled(true);
         progressBar.setVisibility(ProgressBar.INVISIBLE);

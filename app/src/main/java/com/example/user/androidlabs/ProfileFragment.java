@@ -1,6 +1,5 @@
 package com.example.user.androidlabs;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.user.androidlabs.database.UserProfile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         progressBar = view.findViewById(R.id.progressBar);
-        progressBar.setVisibility(ProgressBar.VISIBLE);
+        //progressBar.setVisibility(ProgressBar.VISIBLE);
 
         Button editButton = view.findViewById(R.id.profileEditButton);
         editButton.setOnClickListener(
@@ -108,8 +108,8 @@ public class ProfileFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
             if (userProfile!= null){
-                fullNameView.setText(userProfile.fullName);
-                phoneNumberView.setText(userProfile.phoneNumber);
+                fullNameView.setText(userProfile.getFullName());
+                phoneNumberView.setText(userProfile.getPhoneNumber());
             }
         }
         @Override

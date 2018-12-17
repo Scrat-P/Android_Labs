@@ -4,15 +4,18 @@
     <string name="imei">IMEI</string>
     <string name="close">close</string>
     <string name="explanation">Application need permission to obtain information about phone state to display IMEI.</string>
+
     <string name="title_activity_main">AndroidLabs</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_menu_home">Home</string>
     <string name="nav_menu_profile">Profile</string>
     <string name="nav_menu_rss">RSS</string>
+
     <string name="auth_button_login">Login</string>
     <string name="auth_button_register">Register</string>
     <string name="auth_button_back_to_login">Back to login</string>
@@ -22,16 +25,23 @@
     <string name="auth_field_email">Email address</string>
     <string name="auth_field_password">Password</string>
     <string name="auth_field_confirm_password">Confirm password</string>
+
     <string name="action_settings">Settings</string>
     <string name="profile_show_error_message">Some error occurred.</string>
     <string name="auth_error_message">Some error occurred.</string>
+
     <string name="profile_edit_error_message">Some error occurred.</string>
     <string name="profile_button_edit">Edit</string>
     <string name="profile_button_logout">Logout</string>
+
     <string name="profile_edit_button_save">Save</string>
     <string name="profile_edit_phone">Phone</string>
     <string name="profile_edit_email">Email</string>
     <string name="profile_edit_full_name">Full name</string>
+    <string name="profile_edit_select_action">Select action</string>
+    <string name="profile_edit_capture_from_camera">Capture photo from camera</string>
+    <string name="profile_edit_select_from_gallery">Select photo from gallery</string>
+
     <string name="hello_home_fragment">Home</string>
     <string name="hello_profile_fragment">Profile</string>
     <string name="hello_rss_fragment">Rss</string>
