@@ -1,5 +1,6 @@
 package com.example.user.androidlabs;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,18 +81,16 @@ public class MainActivity extends AppCompatActivity
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
                 .child("userProfiles").child(user.getUid());
         dbReference.addValueEventListener(profileEventListener);
+
+        updateNavImage();
     }
 
     private ValueEventListener profileEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-            if (userProfile!= null){
+            if (userProfile != null){
                 getFullNameTextViewFromNavView().setText(userProfile.getFullName());
-                StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-                reference.getBytes(Long.MAX_VALUE)
-                        .addOnSuccessListener(successImageLoadListener)
-                        .addOnFailureListener(failureImageLoadListener);
             }
         }
         @Override
@@ -98,6 +98,13 @@ public class MainActivity extends AppCompatActivity
             Log.d("ProfileImage", databaseError.getMessage());
         }
     };
+
+    public void updateNavImage(){
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
+        reference.getBytes(Long.MAX_VALUE)
+                .addOnSuccessListener(successImageLoadListener)
+                .addOnFailureListener(failureImageLoadListener);
+    }
 
     private OnSuccessListener<byte[]> successImageLoadListener = new OnSuccessListener<byte[]>() {
         @Override
@@ -113,6 +120,13 @@ public class MainActivity extends AppCompatActivity
             Log.d("ProfileImage", exception.getMessage());
         }
     };
+
+    private void hideKeyboard(){
+        if(getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -145,8 +159,9 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        hideKeyboard();
 
+        int id = item.getItemId();
         if (id == R.id.nav_home) {
             navController.navigate(R.id.homeFragment);
         } else if (id == R.id.nav_profile) {

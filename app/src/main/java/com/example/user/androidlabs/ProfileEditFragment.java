@@ -46,7 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -65,7 +65,6 @@ public class ProfileEditFragment extends Fragment {
     private ProgressBar progressBar;
     private Button saveButton;
 
-    private UserProfile userProfile;
     private FirebaseUser user;
 
     @Override
@@ -163,12 +162,15 @@ public class ProfileEditFragment extends Fragment {
             DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
                     .child("userProfiles").child(user.getUid());
 
-            final UserProfile profile = new UserProfile(fullName, phoneNumber);
+            byte[] profileImageBytes = imageToByteArray();
+            UserProfile profile = new UserProfile(
+                    fullName, phoneNumber,
+                    UUID.nameUUIDFromBytes(profileImageBytes).toString());
             dbReference.setValue(profile);
 
             if(isPhotoChanged){
                 StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-                reference.putBytes(imageToByteArray()).addOnFailureListener(new OnFailureListener() {
+                reference.putBytes(profileImageBytes).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         Log.d("ProfileEditImage", exception.getMessage());
@@ -178,6 +180,7 @@ public class ProfileEditFragment extends Fragment {
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        ((MainActivity) getActivity()).updateNavImage();
                         navController.navigate(R.id.profileFragment);
                     }
                 });
