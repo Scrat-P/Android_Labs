@@ -76,7 +76,10 @@ public class ProfileEditFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        saveButton = view.findViewById(R.id.profileEditSaveButton);
         progressBar = view.findViewById(R.id.progressBar);
+        disableButtons();
+
         navController = Navigation.findNavController(view);
 
         profileImage = view.findViewById(R.id.profileEditImageView);
@@ -86,7 +89,6 @@ public class ProfileEditFragment extends Fragment {
         phoneField = view.findViewById(R.id.profileEditPhoneField);
         fullNameField = view.findViewById(R.id.profileEditFullNameField);
 
-        Button saveButton = view.findViewById(R.id.profileEditSaveButton);
         saveButton.setOnClickListener(saveButtonListener);
 
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -133,7 +135,6 @@ public class ProfileEditFragment extends Fragment {
         @Override
         public void onFailure(@NonNull Exception exception) {
             Log.d("ProfileEditImage", exception.getMessage());
-            Toast.makeText(getContext(), R.string.profile_edit_error_message, Toast.LENGTH_SHORT).show();
             enableButtons();
         }
     };
@@ -216,13 +217,6 @@ public class ProfileEditFragment extends Fragment {
                     }
                 });
         pictureDialog.show();
-    }
-
-    private void setFileAsAvatar(File file) {
-        if (file == null)
-            return;
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        profileImage.setImageBitmap(bitmap);
     }
 
     private byte[] imageToByteArray(){

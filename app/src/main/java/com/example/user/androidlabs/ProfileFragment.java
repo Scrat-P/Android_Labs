@@ -39,6 +39,9 @@ public class ProfileFragment extends Fragment {
     private ImageView profileImageView;
     private ProgressBar progressBar;
 
+    private Button editButton;
+    private Button logoutButton;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,14 +51,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         progressBar = view.findViewById(R.id.progressBar);
-        //progressBar.setVisibility(ProgressBar.VISIBLE);
+        editButton = view.findViewById(R.id.profileEditButton);
+        logoutButton = view.findViewById(R.id.profileLogoutButton);
+        disableButtons();
 
-        Button editButton = view.findViewById(R.id.profileEditButton);
         editButton.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_profileFragment_to_profileEditFragment)
         );
-
-        Button logoutButton = view.findViewById(R.id.profileLogoutButton);
         logoutButton.setOnClickListener(logoutButtonListener);
 
         TextView emailView = view.findViewById(R.id.profileEmailView);
@@ -91,7 +93,7 @@ public class ProfileFragment extends Fragment {
         public void onSuccess(byte[] bytes) {
             Bitmap bmp = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
             profileImageView.setImageBitmap(bmp);
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            enableButtons();
         }
     };
 
@@ -99,7 +101,7 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onFailure(@NonNull Exception exception) {
             Log.d("ProfileImage", exception.getMessage());
-            Toast.makeText(getContext(), R.string.profile_show_error_message, Toast.LENGTH_SHORT).show();
+            enableButtons();
         }
     };
 
@@ -118,6 +120,18 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getContext(), R.string.profile_show_error_message, Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void disableButtons() {
+        editButton.setEnabled(false);
+        logoutButton.setEnabled(false);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    private void enableButtons() {
+        editButton.setEnabled(true);
+        logoutButton.setEnabled(true);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+    }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
