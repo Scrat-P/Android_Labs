@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.user.androidlabs.database.UserRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,6 +30,8 @@ public class RegistrationFragment extends Fragment {
     private Button registerButton;
     private Button backToLoginButton;
 
+    private UserRepository userRepository;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class RegistrationFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        userRepository = new UserRepository();
+
         emailField = view.findViewById(R.id.emailField);
         passwordField = view.findViewById(R.id.passwordField);
         passwordConfirmationField = view.findViewById(R.id.passwordConfirmationField);
@@ -64,9 +69,7 @@ public class RegistrationFragment extends Fragment {
             final String passwordConfirmation = passwordConfirmationField.getText().toString().trim();
 
             if (!email.isEmpty() && password.equals(passwordConfirmation)) {
-                FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(completeRegisterListener);
+                userRepository.createNewUser(email, password).addOnCompleteListener(completeRegisterListener);
             } else {
                 enableButtons(registerButton, backToLoginButton);
                 Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();

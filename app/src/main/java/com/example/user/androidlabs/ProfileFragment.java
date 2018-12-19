@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.androidlabs.database.UserProfile;
+import com.example.user.androidlabs.database.UserRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,8 @@ public class ProfileFragment extends Fragment {
     private Button editButton;
     private Button logoutButton;
 
+    private UserRepository userRepository;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        userRepository = new UserRepository();
+
         progressBar = view.findViewById(R.id.progressBar);
         editButton = view.findViewById(R.id.profileEditButton);
         logoutButton = view.findViewById(R.id.profileLogoutButton);
@@ -68,22 +73,18 @@ public class ProfileFragment extends Fragment {
         fullNameView = view.findViewById(R.id.profileFullNameView);
 
         profileImageView = view.findViewById(R.id.profileImageView);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-        reference.getBytes(Long.MAX_VALUE)
+        userRepository.getProfileImageBitmap()
             .addOnSuccessListener(successImageLoadListener)
             .addOnFailureListener(failureImageLoadListener);
 
-        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
-            .child("userProfiles").child(user.getUid());
-        dbReference.addValueEventListener(profileEventListener);
+        userRepository.addProfileEventListener(profileEventListener);
     }
 
     private View.OnClickListener logoutButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
             ((MainActivity) getActivity()).cleanArticlesCache();
-            FirebaseAuth.getInstance().signOut();
+            userRepository.signOut();
             ((MainActivity) getActivity()).startAuthActivity();
         }
     };

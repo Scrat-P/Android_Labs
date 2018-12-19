@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.user.androidlabs.database.UserRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,6 +32,8 @@ public class LoginFragment extends Fragment {
     private Button loginButton;
     private ProgressBar progressBar;
 
+    private UserRepository userRepository;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        userRepository = new UserRepository();
+
         progressBar = view.findViewById(R.id.progressBar);
         emailField = view.findViewById(R.id.emailField);
         passwordField = view.findViewById(R.id.passwordField);
@@ -61,9 +66,7 @@ public class LoginFragment extends Fragment {
 
             if (!email.isEmpty() && !password.isEmpty()) {
                 progressBar.setVisibility(ProgressBar.VISIBLE);
-                FirebaseAuth.getInstance()
-                    .signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(completeSignInListener);
+                userRepository.signIn(email, password).addOnCompleteListener(completeSignInListener);
             } else {
                 enableButtons();
                 Toast.makeText(getContext(), R.string.auth_error_message, Toast.LENGTH_SHORT).show();
