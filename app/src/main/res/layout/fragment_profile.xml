@@ -118,8 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="@string/profile_button_logout"
-                android:background="#df3737" />
+                android:text="@string/profile_button_logout" />
 
         </LinearLayout>
     </ScrollView>
