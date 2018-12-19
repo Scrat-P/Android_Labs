@@ -162,15 +162,12 @@ public class ProfileEditFragment extends Fragment {
             DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
                     .child("userProfiles").child(user.getUid());
 
-            byte[] profileImageBytes = imageToByteArray();
-            UserProfile profile = new UserProfile(
-                    fullName, phoneNumber,
-                    UUID.nameUUIDFromBytes(profileImageBytes).toString());
+            UserProfile profile = new UserProfile(fullName, phoneNumber);
             dbReference.setValue(profile);
 
             if(isPhotoChanged){
                 StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-                reference.putBytes(profileImageBytes).addOnFailureListener(new OnFailureListener() {
+                reference.putBytes(imageToByteArray()).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         Log.d("ProfileEditImage", exception.getMessage());

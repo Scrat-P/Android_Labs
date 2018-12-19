@@ -3,24 +3,14 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class UserProfile {
-    private String image;
     private String fullName;
     private String phoneNumber;
 
     public UserProfile(){}
 
-    public UserProfile(String fullName, String phoneNumber, String image){
+    public UserProfile(String fullName, String phoneNumber){
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
-        this.image = image;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getFullName() {

@@ -45,4 +45,8 @@
     <string name="hello_home_fragment">Home</string>
     <string name="hello_profile_fragment">Profile</string>
     <string name="hello_rss_fragment">Rss</string>
+
+    <string name="title_activity_rss_web_view">RssWebViewActivity</string>
+
+    <string name="rss_feed_loading_error_message">Loading failed.</string>
 </resources>
