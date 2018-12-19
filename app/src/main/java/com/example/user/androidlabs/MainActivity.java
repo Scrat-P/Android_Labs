@@ -38,7 +38,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -48,10 +47,6 @@ public class MainActivity extends AppCompatActivity
 
     private NavController navController = null;
     private NavigationView navigationView;
-
-    private String HomeFragmentPageNumber = "1";
-    private String ProfileFragmentPageNumber = "2";
-    private String RssFragmentPageNumber = "3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +85,8 @@ public class MainActivity extends AppCompatActivity
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
             if (userProfile != null){
-                getFullNameTextViewFromNavView().setText(userProfile.getFullName());
+                getFullNameTextViewFromNavView().setText(
+                        String.format("%s %s", userProfile.getFirstName(), userProfile.getLastName()));
             }
         }
         @Override

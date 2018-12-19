@@ -31,19 +31,11 @@ import android.widget.Toast;
 
 import com.example.user.androidlabs.database.UserProfile;
 import com.example.user.androidlabs.database.UserRepository;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -59,9 +51,9 @@ public class ProfileEditFragment extends Fragment {
     private NavController navController;
 
     private ImageView profileImage;
-    private EditText emailField;
     private EditText phoneField;
-    private EditText fullNameField;
+    private EditText firstNameField;
+    private EditText lastNameField;
     private ProgressBar progressBar;
     private Button saveButton;
 
@@ -86,14 +78,11 @@ public class ProfileEditFragment extends Fragment {
         profileImage = view.findViewById(R.id.profileEditImageView);
         profileImage.setOnClickListener(profileImageListener);
 
-        emailField = view.findViewById(R.id.profileEditEmailField);
         phoneField = view.findViewById(R.id.profileEditPhoneField);
-        fullNameField = view.findViewById(R.id.profileEditFullNameField);
+        firstNameField = view.findViewById(R.id.profileEditFirstNameField);
+        lastNameField = view.findViewById(R.id.profileEditLastNameField);
 
         saveButton.setOnClickListener(saveButtonListener);
-
-        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        emailField.setText(userEmail);
 
         userRepository.getProfileImageBitmap()
             .addOnSuccessListener(successImageLoadListener)
@@ -107,7 +96,8 @@ public class ProfileEditFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
             if (userProfile != null){
-                fullNameField.setText(userProfile.getFullName());
+                firstNameField.setText(userProfile.getFirstName());
+                lastNameField.setText(userProfile.getLastName());
                 phoneField.setText(userProfile.getPhoneNumber());
             }
         }
@@ -141,22 +131,11 @@ public class ProfileEditFragment extends Fragment {
         public void onClick(View v) {
             disableButtons();
 
-            String email = emailField.getText().toString().trim();
-            userRepository.updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(getContext(),
-                                R.string.profile_edit_error_message,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            String fullName = fullNameField.getText().toString().trim();
+            String firstName = firstNameField.getText().toString().trim();
+            String lastName = lastNameField.getText().toString().trim();
             String phoneNumber = phoneField.getText().toString().trim();
 
-            UserProfile profile = new UserProfile(fullName, phoneNumber);
+            UserProfile profile = new UserProfile(firstName, lastName, phoneNumber);
             userRepository.setUserProfile(profile);
 
             if(isPhotoChanged){

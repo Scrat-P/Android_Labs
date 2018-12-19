@@ -3,22 +3,32 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class UserProfile {
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
 
-    public UserProfile(){}
+    public UserProfile() {}
 
-    public UserProfile(String fullName, String phoneNumber){
-        this.fullName = fullName;
+    public UserProfile(String firstName, String lastName, String phoneNumber){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhoneNumber() {

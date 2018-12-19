@@ -21,10 +21,15 @@ public class UserRepository {
     public UserRepository() {
         authInstance = FirebaseAuth.getInstance();
         user = authInstance.getCurrentUser();
+        if (user != null) {
+            imageReference = FirebaseStorage.getInstance().getReference().child(user.getUid());
+            profileReference = FirebaseDatabase.getInstance().getReference()
+                    .child("userProfiles").child(user.getUid());
+        }
+    }
 
-        imageReference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-        profileReference = FirebaseDatabase.getInstance().getReference()
-                .child("userProfiles").child(user.getUid());
+    public String getEmail(){
+        return user.getEmail();
     }
 
     public Task<AuthResult> signIn(String email, String password){

@@ -24,19 +24,14 @@ import com.example.user.androidlabs.database.UserProfile;
 import com.example.user.androidlabs.database.UserRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
     private TextView phoneNumberView;
-    private TextView fullNameView;
+    private TextView firstNameView;
+    private TextView lastNameView;
     private ImageView profileImageView;
     private ProgressBar progressBar;
 
@@ -66,11 +61,12 @@ public class ProfileFragment extends Fragment {
         logoutButton.setOnClickListener(logoutButtonListener);
 
         TextView emailView = view.findViewById(R.id.profileEmailView);
-        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String userEmail = userRepository.getEmail();
         emailView.setText(userEmail);
 
         phoneNumberView = view.findViewById(R.id.profilePhoneNumberView);
-        fullNameView = view.findViewById(R.id.profileFullNameView);
+        firstNameView = view.findViewById(R.id.profileFirstNameView);
+        lastNameView = view.findViewById(R.id.profileLastNameView);
 
         profileImageView = view.findViewById(R.id.profileImageView);
         userRepository.getProfileImageBitmap()
@@ -111,7 +107,8 @@ public class ProfileFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
             if (userProfile!= null){
-                fullNameView.setText(userProfile.getFullName());
+                firstNameView.setText(userProfile.getFirstName());
+                lastNameView.setText(userProfile.getLastName());
                 phoneNumberView.setText(userProfile.getPhoneNumber());
             }
         }
