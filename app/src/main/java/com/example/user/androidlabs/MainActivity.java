@@ -1,6 +1,7 @@
 package com.example.user.androidlabs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -67,6 +69,18 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         setProfileEmail(userRepository.getEmail());
         navigationView.setNavigationItemSelectedListener(this);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
+//                    NavigateToFragmentRequest(menuItem.getItemId(), null);
+//                } else {
+//                    navController.navigate(menuItem.getItemId());
+//                }
+//
+//                return false;
+//            }
+//        });
 
         userRepository.addProfileEventListener(profileEventListener);
 
@@ -109,20 +123,10 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    private void hideKeyboard(){
+    public void hideKeyboard(){
         if(getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -132,30 +136,27 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         hideKeyboard();
 
         int id = item.getItemId();
+        int navigationId = 0;
         if (id == R.id.nav_home) {
-            navController.navigate(R.id.homeFragment);
+            navigationId = R.id.homeFragment;
         } else if (id == R.id.nav_profile) {
-            navController.navigate(R.id.profileFragment);
+            navigationId = R.id.profileFragment;
         } else if (id == R.id.nav_rss) {
-            navController.navigate(R.id.rssFragment);
+            navigationId = R.id.rssFragment;
+        }
+
+        if (navigationId != 0){
+            if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
+                NavigateToFragmentRequest(navigationId, null);
+            } else {
+                navController.navigate(navigationId);
+            }
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -189,10 +190,52 @@ public class MainActivity extends AppCompatActivity
         return headerView.findViewById(R.id.nav_header_profile_image);
     }
 
-    public void cleanArticlesCache(){
-        getSharedPreferences("data", Context.MODE_PRIVATE)
-                .edit()
-                .putString("articles", "")
-                .apply();
+    @Override
+    public void onBackPressed() {
+        if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
+            NavigateToFragmentRequest(R.id.profileFragment, null);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void startAboutActivity(){
+        startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    private void NavigateToFragmentRequest(final int fragmentId, final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.leave_from_profile_edit)
+                .setPositiveButton(R.string.leave, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (context == null) {
+                            navController.navigate(fragmentId);
+                        }
+                        else{
+                            startAboutActivity();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.stay, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.create().show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
+                    NavigateToFragmentRequest(0, this);
+                } else {
+                    startAboutActivity();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

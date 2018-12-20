@@ -136,6 +136,7 @@ public class ProfileEditFragment extends Fragment {
             UserProfile profile = new UserProfile(firstName, lastName, phoneNumber);
             userRepository.setUserProfile(profile);
 
+            ((MainActivity) getActivity()).hideKeyboard();
             if(isPhotoChanged){
                 userRepository.putProfileImageBitmap(imageToByteArray()).addOnFailureListener(new OnFailureListener() {
                     @Override

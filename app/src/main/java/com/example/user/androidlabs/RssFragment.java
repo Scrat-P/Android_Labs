@@ -33,6 +33,7 @@ import com.example.user.androidlabs.rss.FeedsAdapter;
 import com.example.user.androidlabs.rss.RssReader;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -67,6 +68,20 @@ public class RssFragment extends Fragment implements RssReader.OnFeedItemLoadedL
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -107,7 +122,7 @@ public class RssFragment extends Fragment implements RssReader.OnFeedItemLoadedL
         onItemClickListener = new FeedsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(FeedItem item) {
-                if (!loadedFromCache) {
+                if (isOnline()) {
                     Intent intent = new Intent(getContext(), RssWebViewActivity.class);
                     intent.putExtra("URL", item.getLink());
                     startActivity(intent);
@@ -204,7 +219,7 @@ public class RssFragment extends Fragment implements RssReader.OnFeedItemLoadedL
 
         builder.setView(dialogView);
 
-        final EditText sourceInput = dialogView.findViewById(R.id.rssSourseInputDialogField);
+        final EditText sourceInput = dialogView.findViewById(R.id.rssSourceInputDialogField);
 
         builder
                 .setCancelable(false)

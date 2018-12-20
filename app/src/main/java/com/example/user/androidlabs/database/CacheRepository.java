@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.example.user.androidlabs.rss.FeedItem;
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -67,7 +65,6 @@ public class CacheRepository {
                 feedItems.add(item);
             }
             reader.endArray();
-
         } catch (FileNotFoundException exception) {
             Log.d("CacheRepository", exception.getMessage());
         } catch (IOException exception) {
@@ -91,7 +88,7 @@ public class CacheRepository {
 
     private void removeTempFile(Context context, String fileName){
         File cacheFile = new File(context.getCacheDir(), fileName);
-        if (cacheFile != null && cacheFile.exists()) {
+        if (cacheFile.exists()) {
             cacheFile.delete();
         }
     }

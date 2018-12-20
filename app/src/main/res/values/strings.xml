@@ -28,7 +28,11 @@
     <string name="auth_field_password">Password</string>
     <string name="auth_field_confirm_password">Confirm password</string>
 
+    <string name="leave_from_profile_edit">Leave editing without saving?</string>
+
     <string name="action_settings">Settings</string>
+    <string name="auth_login_error">Invalid login or password</string>
+    <string name="auth_email_error">Incorrect email</string>
     <string name="auth_error_message">Some error occurred.</string>
 
     <string name="profile_button_edit">Edit</string>
@@ -64,4 +68,6 @@
     <string name="rss_feed_loading">Loading...</string>
 
     <string name="rss_input_dialog_source_example">http://rss_sourse.xml</string>
+    <string name="leave">Leave</string>
+    <string name="stay">Stay</string>
 </resources>

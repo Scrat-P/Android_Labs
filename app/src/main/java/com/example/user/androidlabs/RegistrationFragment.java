@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class RegistrationFragment extends Fragment {
         userRepository = new UserRepository();
 
         emailField = view.findViewById(R.id.emailField);
+        emailField.addTextChangedListener(new EmailValidator(emailField, getContext()));
+
+
         passwordField = view.findViewById(R.id.passwordField);
         passwordConfirmationField = view.findViewById(R.id.passwordConfirmationField);
         registerButton = view.findViewById(R.id.registerButton);
@@ -58,13 +62,14 @@ public class RegistrationFragment extends Fragment {
     private View.OnClickListener registerButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
+            if (emailField.getError() != null) return;
             disableButtons(registerButton, backToLoginButton);
 
             final String email = emailField.getText().toString().trim();
             final String password = passwordField.getText().toString().trim();
             final String passwordConfirmation = passwordConfirmationField.getText().toString().trim();
 
-            if (!email.isEmpty() && password.equals(passwordConfirmation)) {
+            if (!email.isEmpty() && !password.isEmpty() && password.equals(passwordConfirmation)) {
                 userRepository.createNewUser(email, password).addOnCompleteListener(completeRegisterListener);
             } else {
                 enableButtons(registerButton, backToLoginButton);

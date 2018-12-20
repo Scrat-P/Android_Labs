@@ -52,6 +52,7 @@ public class RssReader extends AsyncTask<Void, Void, Void>  {
         void onItemsLoaded();
         void onItemsLoadFailed(Exception e);
     }
+
     private ArrayList<OnProgressListener> onProgressListeners;
     public void addOnProgressListener(OnProgressListener listener) {
         if (!onProgressListeners.contains(listener)) {
@@ -184,12 +185,10 @@ public class RssReader extends AsyncTask<Void, Void, Void>  {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             return builder.parse(inputStream);
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
             notifyOnItemsLoadFailed(e);
             return null;
-
         } catch (SocketTimeoutException e) {
             e.printStackTrace();
             notifyOnItemsLoadFailed(e);

@@ -69,14 +69,14 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView Title,Description,Date;
+        TextView Title, Description, Date;
         ImageView Thumbnail;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.title_text);
             Description = itemView.findViewById(R.id.description_text);
-            Date =  itemView.findViewById(R.id.date_text);
+            Date = itemView.findViewById(R.id.date_text);
             Thumbnail = itemView.findViewById(R.id.thumb_img);
         }
 
