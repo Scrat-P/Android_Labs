@@ -2,8 +2,6 @@ package com.example.user.androidlabs.rss;
 
 import android.os.AsyncTask;
 
-import com.example.user.androidlabs.database.OnProgressListener;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -201,5 +199,10 @@ public class RssReader extends AsyncTask<Void, Void, Void>  {
             notifyOnItemsLoadFailed(e);
             return null;
         }
+    }
+
+    public interface OnProgressListener {
+        void onProgressStarted();
+        void onProgressEnded();
     }
 }

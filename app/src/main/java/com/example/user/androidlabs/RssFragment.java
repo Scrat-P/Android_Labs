@@ -28,7 +28,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user.androidlabs.database.CacheRepository;
-import com.example.user.androidlabs.database.OnProgressListener;
 import com.example.user.androidlabs.rss.FeedItem;
 import com.example.user.androidlabs.rss.FeedsAdapter;
 import com.example.user.androidlabs.rss.RssReader;
@@ -38,7 +37,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class RssFragment extends Fragment implements RssReader.OnFeedItemLoadedListener,
-        RssReader.OnItemsLoadedListener, OnProgressListener {
+        RssReader.OnItemsLoadedListener, RssReader.OnProgressListener {
 
     private RecyclerView recyclerView;
     private FeedsAdapter feedsAdapter;
