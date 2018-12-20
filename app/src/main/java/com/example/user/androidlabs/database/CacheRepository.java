@@ -18,14 +18,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CacheRepository {
     private static CacheRepository instance;
 
-    private CacheRepository() {
-
-    }
+    private CacheRepository() {}
 
     public static CacheRepository getInstance() {
         if (instance == null) {
@@ -57,7 +54,7 @@ public class CacheRepository {
         }
     }
 
-    public ArrayList<FeedItem> readRssCache(Context context, String userUid){
+    public ArrayList<FeedItem> readRssFromCache(Context context, String userUid){
         ArrayList<FeedItem> feedItems = new ArrayList<>();
         File cacheFile = getTempFile(context, userUid);
         try {
@@ -101,19 +98,5 @@ public class CacheRepository {
 
     public void removeCacheForUser(Context context, String userUid) {
         removeTempFile(context, userUid);
-    }
-
-    class JsonFeedItemsAdapter {
-        public List<FeedItem> getFeedItems() {
-            return feedItems;
-        }
-
-        public void setFeedItems(List<FeedItem> feedItems) {
-            this.feedItems = feedItems;
-        }
-
-        @SerializedName("feedItems")
-        @Expose
-        private List<FeedItem> feedItems;
     }
 }

@@ -51,9 +51,7 @@ public class ProfileEditFragment extends Fragment {
     private NavController navController;
 
     private ImageView profileImage;
-    private EditText phoneField;
-    private EditText firstNameField;
-    private EditText lastNameField;
+    private EditText phoneField, firstNameField, lastNameField;
     private ProgressBar progressBar;
     private Button saveButton;
 

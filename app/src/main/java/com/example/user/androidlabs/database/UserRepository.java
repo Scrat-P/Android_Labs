@@ -28,6 +28,10 @@ public class UserRepository {
         }
     }
 
+    public FirebaseUser getUser(){
+        return user;
+    }
+
     public String getEmail(){
         return user.getEmail();
     }
@@ -42,10 +46,6 @@ public class UserRepository {
 
     public Task<AuthResult> createNewUser(String email, String password){
         return authInstance.createUserWithEmailAndPassword(email, password);
-    }
-
-    public Task<Void> updateEmail(String email){
-        return user.updateEmail(email);
     }
 
     public Task<byte[]> getProfileImageBitmap(){

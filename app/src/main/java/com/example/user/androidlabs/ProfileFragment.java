@@ -29,14 +29,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
-    private TextView phoneNumberView;
-    private TextView firstNameView;
-    private TextView lastNameView;
+    private TextView phoneNumberView, firstNameView, lastNameView;
     private ImageView profileImageView;
     private ProgressBar progressBar;
 
-    private Button editButton;
-    private Button logoutButton;
+    private Button editButton, logoutButton;
 
     private UserRepository userRepository;
 

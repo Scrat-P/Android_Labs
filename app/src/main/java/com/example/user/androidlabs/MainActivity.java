@@ -1,6 +1,5 @@
 package com.example.user.androidlabs;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,18 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.user.androidlabs.database.UserProfile;
+import com.example.user.androidlabs.database.UserRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -43,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ProfileFragment.OnFragmentInteractionListener {
 
-    private FirebaseUser user;
+    private UserRepository userRepository;
 
     private NavController navController = null;
     private NavigationView navigationView;
@@ -52,8 +46,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null){
+        userRepository = new UserRepository();
+
+        if (userRepository.getUser() == null){
             startAuthActivity();
             return;
         }
@@ -70,12 +65,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView = findViewById(R.id.nav_view);
-        setProfileEmail(user.getEmail());
+        setProfileEmail(userRepository.getEmail());
         navigationView.setNavigationItemSelectedListener(this);
 
-        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
-                .child("userProfiles").child(user.getUid());
-        dbReference.addValueEventListener(profileEventListener);
+        userRepository.addProfileEventListener(profileEventListener);
 
         updateNavImage();
     }
@@ -96,8 +89,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     public void updateNavImage(){
-        StorageReference reference = FirebaseStorage.getInstance().getReference().child(user.getUid());
-        reference.getBytes(Long.MAX_VALUE)
+        userRepository.getProfileImageBitmap()
                 .addOnSuccessListener(successImageLoadListener)
                 .addOnFailureListener(failureImageLoadListener);
     }

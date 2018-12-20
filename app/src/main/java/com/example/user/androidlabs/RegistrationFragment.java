@@ -23,11 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class RegistrationFragment extends Fragment {
-    private EditText emailField;
-    private EditText passwordField;
-    private EditText passwordConfirmationField;
-    private Button registerButton;
-    private Button backToLoginButton;
+    private EditText emailField, passwordField, passwordConfirmationField;
+    private Button registerButton, backToLoginButton;
 
     private UserRepository userRepository;
 

@@ -25,10 +25,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 public class LoginFragment extends Fragment {
-    private EditText emailField;
-    private EditText passwordField;
-    private Button createNewUserButton;
-    private Button loginButton;
+    private EditText emailField, passwordField;
+    private Button createNewUserButton, loginButton;
     private ProgressBar progressBar;
 
     private UserRepository userRepository;
