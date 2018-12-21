@@ -16,7 +16,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_menu_home">Home</string>
     <string name="nav_menu_profile">Profile</string>
-    <string name="nav_menu_rss">RSS</string>
+    <string name="nav_menu_rss">RSS feed</string>
 
     <string name="auth_button_login">Login</string>
     <string name="auth_button_register">Register</string>
@@ -30,10 +30,10 @@
 
     <string name="leave_from_profile_edit">Leave editing without saving?</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
     <string name="auth_login_error">Invalid login or password</string>
     <string name="auth_email_error">Incorrect email</string>
-    <string name="auth_error_message">Some error occurred.</string>
+    <string name="auth_error_message">Some error occurred</string>
 
     <string name="profile_button_edit">Edit</string>
     <string name="profile_button_logout">Logout</string>
@@ -41,13 +41,13 @@
     <string name="profile_email">Email</string>
     <string name="profile_first_name">First name</string>
     <string name="profile_last_name">Last name</string>
-    <string name="profile_show_error_message">Some error occurred.</string>
+    <string name="profile_show_error_message">Some error occurred</string>
 
     <string name="profile_edit_button_save">Save</string>
     <string name="profile_edit_select_action">Select action</string>
     <string name="profile_edit_capture_from_camera">Capture photo from camera</string>
     <string name="profile_edit_select_from_gallery">Select photo from gallery</string>
-    <string name="profile_edit_error_message">Some error occurred.</string>
+    <string name="profile_edit_error_message">Some error occurred</string>
 
     <string name="hello_home_fragment">Home</string>
     <string name="hello_profile_fragment">Profile</string>
@@ -55,12 +55,11 @@
 
     <string name="title_activity_rss_web_view">RssWebViewActivity</string>
 
-    <string name="rss_feed_correct_url_request">You need to specify correct rss link</string>
-    <string name="rss_feed_loading_error_message">Loading failed.</string>
-    <string name="rss_feed_incorrect_url">Incorrect RssFeed link</string>
+    <string name="rss_feed_loading_error_message">Loading failed</string>
+    <string name="rss_feed_correct_url_request">You need to specify correct rss link.</string>
+    <string name="rss_feed_incorrect_url">Incorrect rss link</string>
     <string name="rss_feed_connection_error">No internet connection</string>
-    <string name="rss_feed_welcome">Welcome to rss reader!</string>
-    <string name="rss_feed_preferences_last_userId">Last user id</string>
+    <string name="rss_feed_preferences_last_user_id">Last user id</string>
     <string name="rss_feed_preferences_rssUrl">Rss url</string>
     <string name="rss_feed_success_load_from_internet">Feed loaded from internet</string>
     <string name="rss_feed_success_load_from_cache">Feed loaded from cache</string>

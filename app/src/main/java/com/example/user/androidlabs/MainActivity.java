@@ -69,18 +69,6 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         setProfileEmail(userRepository.getEmail());
         navigationView.setNavigationItemSelectedListener(this);
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
-//                    NavigateToFragmentRequest(menuItem.getItemId(), null);
-//                } else {
-//                    navController.navigate(menuItem.getItemId());
-//                }
-//
-//                return false;
-//            }
-//        });
 
         userRepository.addProfileEventListener(profileEventListener);
 
@@ -227,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_about:
                 if (navController.getCurrentDestination().getId() == R.id.profileEditFragment) {
                     NavigateToFragmentRequest(0, this);
                 } else {
